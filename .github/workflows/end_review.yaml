@@ -14,7 +14,8 @@ jobs:
         with:
           ref: ${{github.event.pull_request.head.ref}}
           fetch-depth: 0
-      - run: |
+      - name: Delete review app
+        run: |
 
           SOURCE_BRANCH_REF=$(git rev-parse --short HEAD)
           REVIEW_APP_NAME=heroku-pr-review-test-$SOURCE_BRANCH_REF
