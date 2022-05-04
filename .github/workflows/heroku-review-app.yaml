@@ -20,37 +20,47 @@ jobs:
         with:
           ref: ${{github.event.pull_request.head.ref}}
           fetch-depth: 0
-      - name: Create review app
+      - name: Test
         run: |
+          echo ${{ github.event.pull_request.comments_url }}
+          
 
-          SOURCE_BRANCH_REF=$(git rev-parse --short HEAD)
-          REVIEW_APP_NAME=$APP_NAME-$SOURCE_BRANCH_REF
+      # - name: Check out repository code
+      #   uses: actions/checkout@v3
+      #   with:
+      #     ref: ${{github.event.pull_request.head.ref}}
+      #     fetch-depth: 0
+      # - name: Create review app
+      #   run: |
 
-          echo "SOURCE_BRANCH_REF=$SOURCE_BRANCH_REF"
-          echo "REVIEW_APP_NAME=$REVIEW_APP_NAME"
+      #     SOURCE_BRANCH_REF=$(git rev-parse --short HEAD)
+      #     REVIEW_APP_NAME=$APP_NAME-$SOURCE_BRANCH_REF
 
-          curl -X POST https://api.heroku.com/apps \
-              -H "Accept: application/vnd.heroku+json; version=3" \
-              -H "Authorization: Bearer $HEROKU_API_KEY" \
-              -H "Content-Type: application/json" \
-              -d "{\"name\":\"$REVIEW_APP_NAME\", \"region\":\"eu\"}"
+      #     echo "SOURCE_BRANCH_REF=$SOURCE_BRANCH_REF"
+      #     echo "REVIEW_APP_NAME=$REVIEW_APP_NAME"
 
-          git push \
-              https://heroku:$HEROKU_API_KEY@git.heroku.com/$REVIEW_APP_NAME.git \
-              $SOURCE_BRANCH_REF:refs/heads/main
+      #     curl -X POST https://api.heroku.com/apps \
+      #         -H "Accept: application/vnd.heroku+json; version=3" \
+      #         -H "Authorization: Bearer $HEROKU_API_KEY" \
+      #         -H "Content-Type: application/json" \
+      #         -d "{\"name\":\"$REVIEW_APP_NAME\", \"region\":\"eu\"}"
 
-          REVIEW_APP_URL="https://$REVIEW_APP_NAME.herokuapp.com/"
+      #     git push \
+      #         https://heroku:$HEROKU_API_KEY@git.heroku.com/$REVIEW_APP_NAME.git \
+      #         $SOURCE_BRANCH_REF:refs/heads/main
 
-          curl -X POST $COMMENTS_URL \
-              -H "Content-Type: application/json" \
-              -H "Authorization: token $GITHUB_TOKEN" \
-              --data "{ \"body\": \"A review app was created for this PR. See $REVIEW_APP_URL \" }"
+      #     REVIEW_APP_URL="https://$REVIEW_APP_NAME.herokuapp.com/"
 
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          COMMENTS_URL: ${{ github.event.pull_request.comments_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APP_NAME: heroku-pr-review-test
+      #     curl -X POST $COMMENTS_URL \
+      #         -H "Content-Type: application/json" \
+      #         -H "Authorization: token $GITHUB_TOKEN" \
+      #         --data "{ \"body\": \"A review app was created for this PR. See $REVIEW_APP_URL \" }"
+
+      #   env:
+      #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      #     COMMENTS_URL: ${{ github.event.pull_request.comments_url }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     APP_NAME: heroku-pr-review-test
   
   delete-review-app:
     if: |
