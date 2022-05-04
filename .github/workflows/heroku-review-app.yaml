@@ -53,7 +53,8 @@ jobs:
           APP_NAME: heroku-pr-review-test
   
   delete-review-app:
-    if: ${{ github.event_name == "pull_request" && github.event.action == "closed" }}
+    if: |
+      github.event_name == "pull_request" && github.event.action == "closed"
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
