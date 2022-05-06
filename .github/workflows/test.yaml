@@ -1,0 +1,19 @@
+name: Start review
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - develop2
+jobs:  
+  create-review-app:
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Check out repository code
+      #   uses: actions/checkout@v3
+      #   with:
+      #     ref: ${{github.event.pull_request.head.ref}}
+      #     fetch-depth: 0
+      - name: Main script
+        run: |
+          echo ${{github.event.pull_request.head.ref}}
