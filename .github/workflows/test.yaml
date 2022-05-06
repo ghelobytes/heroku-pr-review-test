@@ -16,4 +16,5 @@ jobs:
       #     fetch-depth: 0
       - name: Main script
         run: |
+          echo "HELLO FROM develop2"
           echo ${{github.event.pull_request.head.ref}}
