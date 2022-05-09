@@ -31,10 +31,10 @@ jobs:
 
           REVIEW_APP_URL="https://$REVIEW_APP_NAME.herokuapp.com/"
 
-          curl -X POST $COMMENTS_URL \
-              -H "Content-Type: application/json" \
-              -H "Authorization: token $GITHUB_TOKEN" \
-              --data "{ \"body\": \"A review app was created for this PR. See $REVIEW_APP_URL \" }"
+          # curl -X POST $COMMENTS_URL \
+          #     -H "Content-Type: application/json" \
+          #     -H "Authorization: token $GITHUB_TOKEN" \
+          #     --data "{ \"body\": \"A review app was created for this PR. See $REVIEW_APP_URL \" }"
 
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
