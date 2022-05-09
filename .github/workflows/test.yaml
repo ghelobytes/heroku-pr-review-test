@@ -37,11 +37,8 @@ jobs:
           curl -X PATCH https://api.heroku.com/apps/$REVIEW_APP_NAME/config-vars \
               -H "Accept: application/vnd.heroku+json; version=3" \
               -H "Authorization: Bearer $HEROKU_API_KEY" \
-              -H "Content-Type: application/json" \         
-              -d '{
-                "REACT_APP_API_URL": "$REACT_APP_API_URL",
-                "MAPBOX_API_KEY": "$MAPBOX_API_KEY"
-              }'
+              -H "Content-Type: application/json" \
+              -d "{\"REACT_APP_API_URL\":\"$REACT_APP_API_URL\", \"MAPBOX_API_KEY\":\"MAPBOX_API_KEY\"}"
           ######################################################################
 
         env:
